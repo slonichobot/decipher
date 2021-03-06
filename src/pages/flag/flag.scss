@@ -1,0 +1,37 @@
+
+page-flag {
+
+	text-align: center;
+
+	svg {
+		margin: auto;
+		width: 70%;
+		line {
+			stroke: #E6E6E6;
+			stroke-width: 20;
+			stroke-linecap: round;
+
+			&.selected {
+				stroke: #657FFD;
+			}
+		}
+	}
+
+	.current {
+		width: 90%;
+		text-align: center;
+		margin: .2em auto;
+		font-size: 20px;
+
+		td {
+			text-align: center;
+		}
+
+		.char {
+			width: 50%;
+			font-size: 32px;
+			font-family: courier;
+			text-align: right;
+		}
+	}
+}

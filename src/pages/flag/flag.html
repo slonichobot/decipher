@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Flag
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<svg viewBox="-100 -100 200 200">
+		<g *ngFor="let pos of positions">
+			<line
+				[attr.x1]="(pos.x1 * 88)"
+				[attr.y1]="(pos.y1 * 88)"
+				[attr.x2]="(pos.x2 * 88)"
+				[attr.y2]="(pos.y2 * 88)"
+				(click)="select(pos.id)"
+			 />
+		</g>
+		<g *ngFor="let pos of positions">
+			<line
+				*ngIf="isSelected(pos.id)"
+				[attr.x1]="(pos.x1 * 90)"
+				[attr.y1]="(pos.y1 * 90)"
+				[attr.x2]="(pos.x2 * 90)"
+				[attr.y2]="(pos.y2 * 90)"
+				(click)="select(pos.id)"
+				class="selected"
+			 />
+		</g>
+	</svg>
+	<table class="current" text-center><tr>
+		<td class="char">{{current}}</td>
+		<td>
+			<button ion-button color="dark"
+				(click)="add()">
+				<ion-icon name="add-circle"></ion-icon>
+			</button>
+			<button ion-button color="dark"
+				(click)="back()">
+				<ion-icon name="backspace"></ion-icon>
+			</button>
+		</td>
+	</tr></table>
+  
+  <ion-list *ngIf="flag.length">
+  	<button ion-item (click)="save()">
+  		{{flag}}
+  	</button>
+  </ion-list>
+
+
+   <ion-list *ngIf="saved && saved.length">
+    <ion-list-header>Saved items</ion-list-header>
+    <button ion-item *ngFor="let item of saved">
+      {{ item }}
+    </button>
+    <button ion-item (click)="clear()">
+      <ion-icon name="trash"></ion-icon>
+      Clear
+    </button>
+  </ion-list>
+
+</ion-content>
