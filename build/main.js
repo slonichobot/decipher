@@ -688,6 +688,7 @@ var CalcPage = /** @class */ (function () {
         this.outBasis = 10;
         this.abcTransl = 0;
         this.digitOrder = 0;
+        this.changed = false;
         this.val = "";
         this.divisors = [';', ','];
         this.operators = ['+', '-', '*', '/', '%', '^', '&', '|'];
@@ -708,13 +709,18 @@ var CalcPage = /** @class */ (function () {
             this.inBasis = val;
         else
             this.outBasis = val;
+        this.changed = true;
         this.calc({ target: { value: this.val } });
     };
     CalcPage.prototype.calc = function (event) {
-        this.val = event.target.value.toLowerCase();
+        var nval = event.target.value.toLowerCase();
         for (var i = 1; i <= this.divisors.length; i++) {
-            this.val = this.val.split(this.divisors[i]).join(this.divisors[0]);
+            nval = nval.split(this.divisors[i]).join(this.divisors[0]);
         }
+        if (nval == this.val && !this.changed)
+            return;
+        this.changed = false;
+        this.val = nval;
         var val_arr = this.val.split(this.divisors[0]);
         this.result = [[]];
         try {
@@ -775,7 +781,7 @@ var CalcPage = /** @class */ (function () {
         if (String(this.outBasis)[0] == 'A') {
             ret = ret.map(function (x) {
                 if (String(_this.outBasis) == 'A')
-                    x -= (x - 1) % 26;
+                    x -= 1;
                 return String.fromCharCode(x + "A".charCodeAt(0));
             });
             return minus + ret.join('');
